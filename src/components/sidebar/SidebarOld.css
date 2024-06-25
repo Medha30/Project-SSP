@@ -1,0 +1,40 @@
+/* Sidebar styles */
+.sidebar {
+    width: 230px;
+    background-color: #333;
+    padding: 20px;
+  }
+  
+  /* Sidebar link styles */
+  .nav-link {
+    color: white;
+    text-decoration: none;
+  }
+  
+  /* Active link styles */
+  .nav-link.active {
+    font-weight: bold;
+  }
+  
+  /* User profile dropdown styles */
+  .dropdown-menu {
+    background-color: #333;
+  }
+  
+  .dropdown-item {
+    color: white;
+  }
+  
+  /* User profile image styles */
+  .user-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
+
+
+
+
+  
