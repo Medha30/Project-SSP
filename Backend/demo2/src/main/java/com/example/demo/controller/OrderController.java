@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.PlaceOrder;
 import com.example.demo.entity.Order;
 import com.example.demo.repository.OrderRepository;
+import com.example.demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,21 +15,23 @@ import java.util.Optional;
 public class OrderController {
 
     @Autowired
-    private OrderRepository orderRepository;
-
+    OrderService orderService;
     @GetMapping
-    public List<Order> getAllOrders() {
+    public List<Order> getAllOrders()
+    {
         return orderRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Optional<Order> getOrderById(@PathVariable Long id) {
-        return orderRepository.findById(id);
-    }
+//    @GetMapping("/{userid}")
+//    public Optional<Order> getOrderByUserId(@PathVariable Long Userid) {
+//        return orderRepository.findByUserId(Userid);
+//    }
 
     @PostMapping
-    public Order createOrder(@RequestBody Order order) {
-        return orderRepository.save(order);
+    public String createOrder(@RequestBody PlaceOrder placeOrder)
+    {
+        return "";
+//        return orderRepository.save(order);
     }
 
 //    @PutMapping("/{id}")
@@ -38,8 +42,5 @@ public class OrderController {
 //        return orderRepository.save(order);
 //    }
 
-    @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Long id) {
-        orderRepository.deleteById(id);
-    }
+
 }

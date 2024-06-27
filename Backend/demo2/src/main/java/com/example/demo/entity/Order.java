@@ -25,31 +25,14 @@ public class Order {
     private Date orderDate;
 
     @ManyToOne
-    @JoinColumn(name="customer_id",referencedColumnName = "id")
-    private Customer customerId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-    public Long getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product productId;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Integer orderNo;
 
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public Customer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
-    }
 }
 
