@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
 
 const AuthContext = createContext();
 
@@ -32,7 +32,29 @@ const authReducer = (state, action) => {
 const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
+    useEffect(() => {
+        const savedState = localStorage.getItem('authState');
+        if (savedState) {
+            dispatch({ type: 'LOGIN', payload: JSON.parse(savedState) });
+        }
+    }, []);
+
+    useEffect(() => {
+        if (state.isAuthenticated) {
+            localStorage.setItem('authState', JSON.stringify({
+                user: state.user,
+                token: state.token
+            }));
+        } else {
+            localStorage.removeItem('authState');
+        }
+
+        // localStorage.getItem("authState")
+        console.log('yuhuu',localStorage.getItem("authState"));
+    }, [state]);
+
     const login = (user, token) => {
+        console.log("==/m===",user,token);
         dispatch({ type: 'LOGIN', payload: { user, token } });
     };
 

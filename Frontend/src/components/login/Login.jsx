@@ -53,9 +53,11 @@ const Login = () => {
       if (response.status === 200) {
         const user = { name: response.data.slice(0, -15)};
         const token = response.data.slice(-15);
+
+        console.log("=====",user,token);
         
         login(user, token);
-        console.log(JSON.stringify(login));
+        console.log(login);
         setLoggedIn(true);
         navigate('/Home'); // Redirect to profile page after login
       }
