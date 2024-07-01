@@ -1,15 +1,15 @@
 // import React from 'react';
 import React, { useEffect, useState } from 'react';
 import { Container, Grid, Card, CardMedia, CardContent, Typography, Button } from '@mui/material';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import axiosInstance from '../../utils/axios/axiosInstance';
 
 const GroceryGallery = () => {
   const [groceryData, setGroceryData]=useState([]);
 
     const fetchGroceryProduct = async ()=> {
         try {
-          const response = await axios.get('http://localhost:8080/products/all/grocery/4');
+          const response = await axiosInstance.get('/products/all/grocery/4');
           setGroceryData(response.data);
 
         } catch (error) {

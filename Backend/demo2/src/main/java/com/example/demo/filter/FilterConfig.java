@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class FilterConfig {
 
     @Bean
-    public FilterRegistrationBean<TokenFilter> loggingFilter() {
+    FilterRegistrationBean<TokenFilter> loggingFilter() {
         FilterRegistrationBean<TokenFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new TokenFilter());
         registrationBean.addUrlPatterns("/login/*");

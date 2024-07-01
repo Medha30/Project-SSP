@@ -1,7 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.UserInfo;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +16,9 @@ import java.security.SecureRandom;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private HttpServletRequest request;
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -64,4 +71,27 @@ public class UserService {
         }
         return sb.toString();
     }
+
+    public String getUserNameFromUserInfoHeader()  {
+        String userName=null;
+        try {
+            String userI = request.getHeader("UserInfo");
+            ObjectMapper mapper= new ObjectMapper();
+            UserInfo userInfo=mapper.readValue(userI,UserInfo.class);
+            userName = userInfo.getUser();
+//            return userName;
+        }
+
+        catch (Exception e){
+            e.printStackTrace();
+        }
+//        String userI = request.getHeader("UserInfo");
+//        ObjectMapper mapper= new ObjectMapper();
+//        UserInfo userInfo=mapper.readValue(userI,UserInfo.class);
+//        String userName = userInfo.getUser();
+
+//        String userName = request.getHeader("UserInfo");
+        return userName;
+    }
+    
 }

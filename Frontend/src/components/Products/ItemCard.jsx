@@ -2,10 +2,10 @@
 import React, { useContext, useState } from 'react';
 import { Card, CardContent, CardMedia, Typography, Alert, Button } from '@mui/material';
 import { AuthContext } from '../globalContext/AuthContext';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios/axiosInstance';
 
 const ItemCard = ({ item }) => {
-  const { token, user } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const [apiError, setApiError] = useState('');
   const [apiSuccess, setApiSuccess] = useState('');
 
@@ -17,35 +17,15 @@ const ItemCard = ({ item }) => {
     } else {
 
       try {
-        // const response = await axios.post('http://localhost:8080/api/validate', body,{
-        //       headers: {
-        //           Authorization: `Bearer ${token}`
-        //       }}
-        // );
-        // if (response.data === false) {
-        //   setApiError("Please Login first before adding to cart 2");
-        //   return false;
-        // }
-        // else {
+       
         const bodyCart = {
           quantity:1,
-          user: {
-            username: user.name
-          },
           product: {
             id: productId
           }
         }
         try {
-          console.log(`Bearer ${token}`);
-          console.log(JSON. stringify(bodyCart ));
-          const response = await axios.post('http://localhost:8080/cart', bodyCart
-            // {
-            //   headers: {
-            //      Authorization: `Bearer ${token}`              }
-            // }
-          );
-          console.log(response.status);
+          const response = await axiosInstance.post('/cart', bodyCart);
           if (response.status === 201) {
             setApiSuccess("Item added to cart");
           }

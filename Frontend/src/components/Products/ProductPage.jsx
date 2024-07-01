@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect } from 'react';
 import { Container, Grid, Typography, Box, List, ListItem, ListItemText, Card, CardMedia, Button, Alert } from '@mui/material';
 import axios from 'axios';
 
 const ProductPage = () => {
+
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [details, setDetails] = useState([]);
+  
+
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {

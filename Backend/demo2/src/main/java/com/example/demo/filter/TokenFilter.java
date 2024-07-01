@@ -1,17 +1,18 @@
 package com.example.demo.filter;
 
-import com.example.demo.entity.User;
-import com.example.demo.service.UserService;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
-import java.util.Enumeration;
+import com.example.demo.entity.User;
+import com.example.demo.service.UserService;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class TokenFilter extends OncePerRequestFilter {
@@ -27,12 +28,12 @@ public class TokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        Enumeration<String> headerNames = request.getHeaderNames();
-        String headerName = null;
-        while (headerNames.hasMoreElements()) {
-            headerName = headerNames.nextElement();
-            System.out.println(headerName + ": " + request.getHeader(headerName));
-        }
+//        Enumeration<String> headerNames = request.getHeaderNames();
+//        String headerName = null;
+//        while (headerNames.hasMoreElements()) {
+//            headerName = headerNames.nextElement();
+//            System.out.println(headerName + ": " + request.getHeader(headerName));
+//        }
 
 
         String authHeader = request.getHeader("Authorization");

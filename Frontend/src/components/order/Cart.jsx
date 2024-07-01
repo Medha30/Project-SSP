@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { AuthContext } from '../globalContext/AuthContext';
 import axios from 'axios';
 
 const CartListView =   () => {
-    const { token, user } = useContext(AuthContext);
     const [cartItem ,setCartItem]= useState([]);
 
     const FetchUserCart = async () => {

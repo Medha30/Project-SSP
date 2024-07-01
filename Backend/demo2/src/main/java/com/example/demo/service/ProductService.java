@@ -24,11 +24,12 @@ public class ProductService {
     public List<Product> getSliceAllData(String type,int size){
         List<Product> data= new ArrayList<>();
 
-        Pageable pageable = PageRequest.of(0, size);
+        if(!type.equals("undefined")) {
+            Pageable pageable = PageRequest.of(0, size);
 
-        Product.ProductType productType = Product.ProductType.valueOf(type);
-        data.addAll(productRepository.findAllSlice(productType,pageable));
-
+            Product.ProductType productType = Product.ProductType.valueOf(type);
+            data.addAll(productRepository.findAllSlice(productType, pageable));
+        }
 
         return data;
     }

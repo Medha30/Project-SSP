@@ -1,4 +1,11 @@
+// AuthContext.js
 import React, { createContext, useReducer, useEffect } from 'react';
+import {
+    getUserInfo,
+    saveUserInfo,
+    removeUserInfo,
+    checkValidToken
+} from '../../utils/localStorage/userLocalStorage';
 
 const AuthContext = createContext();
 
@@ -33,28 +40,22 @@ const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     useEffect(() => {
-        const savedState = localStorage.getItem('authState');
-        if (savedState) {
-            dispatch({ type: 'LOGIN', payload: JSON.parse(savedState) });
+        if (checkValidToken()) {
+            const userInfo = getUserInfo();
+            dispatch({ type: 'LOGIN', payload: { user: userInfo.name, token: userInfo.authToken } });
         }
     }, []);
 
     useEffect(() => {
         if (state.isAuthenticated) {
-            localStorage.setItem('authState', JSON.stringify({
-                user: state.user,
-                token: state.token
-            }));
+            saveUserInfo(state.user, state.token);
         } else {
-            localStorage.removeItem('authState');
+            removeUserInfo();
         }
-
-        // localStorage.getItem("authState")
-        console.log('yuhuu',localStorage.getItem("authState"));
     }, [state]);
 
     const login = (user, token) => {
-        console.log("==/m===",user,token);
+        console.log(JSON.stringify(user));
         dispatch({ type: 'LOGIN', payload: { user, token } });
     };
 

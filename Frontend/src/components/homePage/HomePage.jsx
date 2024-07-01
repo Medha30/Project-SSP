@@ -8,20 +8,32 @@ const Home = () => {
 
   return (
     <Container>
-
+      <Box sx={{ my: 4 }}>
+            {/* <Typography variant="h4" gutterBottom align="center">
+                Advertisements
+            </Typography> */}
+            <Grid container justifyContent="center" alignItems="center">
+                {/* <Grid item xs={12} sm={8} md={6}> */}
+                    <CardContent>
+                        <Advertisement />
+                    </CardContent>
+                {/* </Grid> */}
+            </Grid>
+        </Box>
       <ProductBasketForProfile />
       <ItemList/>
       <Box sx={{ my: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Advertisements
-        </Typography>
-        <Grid container spacing={2}>
-          <CardContent>
-
-            <Advertisement />
-          </CardContent>
-        </Grid>
-      </Box>
+            {/* <Typography variant="h4" gutterBottom align="center">
+                Advertisements
+            </Typography> */}
+            <Grid container justifyContent="center" alignItems="center">
+                {/* <Grid item xs={12} sm={8} md={6}> */}
+                    <CardContent>
+                        <Advertisement />
+                    </CardContent>
+                {/* </Grid> */}
+            </Grid>
+        </Box>
 
     </Container>
   );

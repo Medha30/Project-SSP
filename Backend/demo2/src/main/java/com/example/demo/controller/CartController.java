@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Cart;
 import com.example.demo.service.CartService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +26,21 @@ public class CartController {
     }
 
 
-
-    @GetMapping("/{id}")
-    public ResponseEntity<List<Cart>> getCartById(@PathVariable Long id){
-        List<Cart> carts = cartService.getAllCartsByUserId(id);
+    @GetMapping("/{userName}")
+    public ResponseEntity<List<Cart>> getCartByUserName(@PathVariable String userName) {
+        List<Cart> carts = cartService.getAllCartsByUserName(userName);
         return ResponseEntity.ok().body(carts);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteProduct(@RequestBody Cart cart){
-        cartService.deleteCart(cart);
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable long productId) throws JsonProcessingException {
+        cartService.deleteCart(productId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{cartId}/{quantity}")
+    public ResponseEntity<Void> updateProduct(@PathVariable long cartId,@PathVariable int quantity)  {
+        cartService.updateCart(cartId,quantity);
         return ResponseEntity.noContent().build();
     }
 }

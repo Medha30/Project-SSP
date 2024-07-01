@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Grid, Card, CardMedia, CardContent, Typography, Button } from '@mui/material';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import axiosInstance from '../../utils/axios/axiosInstance';
 
 const VegetableGallery = () => {
   const [vegetableData, setVegetableData]=useState([]);
 
   const fetchVegetableProduct = async ()=> {
       try {
-        const response = await axios.get('http://localhost:8080/products/all/vegetable/4');
+        const response = await axiosInstance.get('/products/all/vegetable/4');
         setVegetableData(response.data);
 
       } catch (error) {
