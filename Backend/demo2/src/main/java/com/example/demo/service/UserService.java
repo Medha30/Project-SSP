@@ -43,8 +43,8 @@ public class UserService {
     public String logoutUser(User user){
         User foundUser = findByUsername(user.getUsername());
         if (foundUser != null && foundUser.getLoginToken().equals(user.getLoginToken())) {
-            user.setLoginToken(null);
-            saveUser(user);
+            foundUser.setLoginToken(null);
+            saveUser(foundUser);
             return "Logout Successfully";
         } else {
             return "Invalid username or password";

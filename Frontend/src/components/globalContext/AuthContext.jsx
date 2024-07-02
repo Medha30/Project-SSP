@@ -55,7 +55,6 @@ const AuthProvider = ({ children }) => {
     }, [state]);
 
     const login = (user, token) => {
-        console.log(JSON.stringify(user));
         dispatch({ type: 'LOGIN', payload: { user, token } });
     };
 

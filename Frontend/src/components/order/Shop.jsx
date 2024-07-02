@@ -1,9 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from 'react';
 import axiosInstance from '../../utils/axios/axiosInstance';
+import {
+    Box,
+    Button,
+    IconButton,
+    Paper,
+    Typography,
+} from '@mui/material';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { AuthContext } from '../globalContext/AuthContext';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         fetchCartItems();
@@ -11,25 +22,25 @@ const Cart = () => {
 
     const fetchCartItems = async () => {
         try {
-            const response = await axiosInstance.get('/cart/ravi');
+            const response = await axiosInstance.get(`/cart/${user}`);
             setCartItems(response.data);
         } catch (error) {
             console.error('Error fetching cart items:', error);
         }
     };
 
-    const incrementQuantity = async (id,quantity) => {
+    const incrementQuantity = async (id, quantity) => {
         try {
-            await axiosInstance.put(`/cart/${id}/${quantity+1}`);
+            await axiosInstance.put(`/cart/${id}/${quantity + 1}`);
             fetchCartItems();
         } catch (error) {
             console.error('Error incrementing quantity:', error);
         }
     };
 
-    const decrementQuantity = async (id,quantity) => {
+    const decrementQuantity = async (id, quantity) => {
         try {
-            await axiosInstance.put(`/cart/${id}/${quantity-1}`);
+            await axiosInstance.put(`/cart/${id}/${quantity - 1}`);
             fetchCartItems();
         } catch (error) {
             console.error('Error decrementing quantity:', error);
@@ -45,41 +56,49 @@ const Cart = () => {
         }
     };
 
- 
-
     return (
-        <div className="cart">
-            <h1>Shopping Cart</h1>
-            <div className="cart-items">
+        <Box sx={{ padding: '20px' }}>
+            <Typography variant="h4" gutterBottom>
+                Shopping Cart
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
                 {cartItems.length === 0 ? (
-                    <p>Your cart is empty</p>
+                    <Typography variant="body1">Your cart is empty</Typography>
                 ) : (
-                    <ul>
-                        {cartItems.map((item) => (
-                            <li key={item.id}>
-                                <h3>{item.product.name}</h3>
-                                <p>Price: Rs. {item.product.price}</p>
-                                <p>
-                                    Quantity:
-                                    <button onClick={() => decrementQuantity(item.id,item.quantity)} disabled={item.quantity <= 1}>-</button>
-                                    {item.quantity}
-                                    <button onClick={() => incrementQuantity(item.id,item.quantity)}>+</button>
-                                </p>
-                                <button onClick={() => deleteItem(item.product.id)}>Remove</button>
-                            </li>
-                        ))}
-                    </ul>
+                    cartItems.map((item) => (
+                        <Paper key={item.id} elevation={3} sx={{ padding: '20px', minWidth: '200px' }}>
+                            <Typography variant="h6">{item.product.name}</Typography>
+                            <Typography variant="body1">Price: Rs. {item.product.price}</Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
+                                <Typography variant="body1">Quantity:</Typography>
+                                <IconButton
+                                    onClick={() => decrementQuantity(item.id, item.quantity)}
+                                    disabled={item.quantity <= 1}
+                                    sx={{ margin: '0 5px' }}
+                                >
+                                    <RemoveIcon />
+                                </IconButton>
+                                <Typography variant="body1">{item.quantity}</Typography>
+                                <IconButton
+                                    onClick={() => incrementQuantity(item.id, item.quantity)}
+                                    sx={{ margin: '0 5px' }}
+                                >
+                                    <AddIcon />
+                                </IconButton>
+                            </Box>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={() => deleteItem(item.product.id)}
+                                startIcon={<DeleteIcon />}
+                            >
+                                Remove
+                            </Button>
+                        </Paper>
+                    ))
                 )}
-            </div>
-            {/* <div className="delivery-date">
-                <h2>Delivery Date</h2>
-                <input
-                    type="date"
-                    value={deliveryDate}
-                    onChange={(e) => updateDeliveryDate(e.target.value)}
-                />
-            </div> */}
-        </div>
+            </Box>
+        </Box>
     );
 };
 

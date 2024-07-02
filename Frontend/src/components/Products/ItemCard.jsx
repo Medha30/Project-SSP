@@ -30,7 +30,7 @@ const ItemCard = ({ item }) => {
             setApiSuccess("Item added to cart");
           }
         } catch (error) {
-          console.log(error.response);
+          console.log(error.response.data);
           setApiError(error);
         }
 

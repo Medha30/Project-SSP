@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ProductList from './ProductList';
 import axiosInstance from '../../utils/axios/axiosInstance';
 import { Box, Button, Container, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { AuthContext } from '../globalContext/AuthContext';
 
 const AddProducts = () => {
     const [category, setCategory] = useState('');
@@ -11,6 +12,7 @@ const AddProducts = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [refreshList, setRefreshList] = useState(0);
+    const { user } = useContext(AuthContext);
 
     const handleChange = (e) => {
         setCategory(e.target.value);
@@ -80,7 +82,9 @@ const AddProducts = () => {
     
     return (
         <>
-        {/* <Container component="main" maxWidth="xs"> */}
+        {successMessage && <Typography variant="body1" style={{ color: 'green' }}>{successMessage}</Typography>}
+        {errorMessage && <Typography variant="body1" style={{ color: 'red' }}>{errorMessage}</Typography>}
+        { user==='ADMIN' && <>
       
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2} alignItems="center" margin={8}>
@@ -146,10 +150,10 @@ const AddProducts = () => {
         }}
       >
             <ProductList refreshList={refreshList}/>
-            {successMessage && <Typography variant="body1" style={{ color: 'green' }}>{successMessage}</Typography>}
-            {errorMessage && <Typography variant="body1" style={{ color: 'red' }}>{errorMessage}</Typography>}
+            
         </Box>
-        {/* </Container> */}
+        </>
+        }
         </>
     )
 }

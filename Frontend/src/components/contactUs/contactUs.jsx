@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
 function ContactUs() {
   const classes = useStyles();
 
+  const saveComplaint =()=>{
+    alert('under maintainance');
+  }
+
   return (
     <Container className={classes.root}>
       <Typography variant="h4" gutterBottom>
@@ -81,6 +85,7 @@ function ContactUs() {
                 variant="contained"
                 color="primary"
                 className={classes.button}
+                onClick={saveComplaint}
               >
                 Submit
               </Button>

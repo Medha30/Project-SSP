@@ -1,6 +1,6 @@
 // themes.js
 import { createTheme } from '@mui/material/styles';
-import { pink } from '@mui/material/colors';
+import { blueGrey, grey, pink } from '@mui/material/colors';
 
 export const blackAndWhiteTheme = createTheme({
   palette: {
@@ -23,15 +23,16 @@ export const pinkAndBlackTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: pink[500],
+      main: blueGrey[500],
     },
     background: {
-      default: '#000000',
-      paper: '#000000',
+      default: '#ffffff',
+      paper: '#ffffff',
     },
     text: {
-      primary: '#ffffff',
-      secondary: pink[500],
-    },
+      primary: '#000000',
+      secondary: '#000000',    },
+      
   },
+  
 });

@@ -93,15 +93,15 @@ function ButtonAppBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.flex}>
-            Shoppy Shop
+            Shoppy Shop 
           </Typography>
           <div className={classes.toolbarButtons}>
             <IconButton color="inherit" aria-label="Home" onClick={() => navigate('/home')}>
               <HomeIcon /> Home
             </IconButton>
-            <IconButton color="inherit" aria-label="Contact Us" onClick={() => navigate('/contactUs')}>
+            {/* <IconButton color="inherit" aria-label="Contact Us" onClick={() => navigate('/contactUs')}>
               <ContactMailIcon /> Contact Us
-            </IconButton>
+            </IconButton> */}
             {searchVisible && (
               <div className={classes.search}>
                 <InputBase
@@ -122,9 +122,9 @@ function ButtonAppBar(props) {
                 />
               </div>
             )}
-            <IconButton color="inherit" aria-label="Search" onClick={handleSearchToggle}>
+            {/* <IconButton color="inherit" aria-label="Search" onClick={handleSearchToggle}>
               <SearchIcon /> Search
-            </IconButton>
+            </IconButton> */}
             <IconButton color="inherit" aria-label="Login" onClick={() => navigate('/login')}>
               <LoginIcon />
             </IconButton>

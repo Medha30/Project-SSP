@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Button, TextField, Typography, Box, Alert, Container } from '@mui/material';
 import axios from 'axios';
 import { AuthContext } from '../globalContext/AuthContext';
+import axiosInstance from '../../utils/axios/axiosInstance';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -12,7 +13,7 @@ const Login = () => {
   const [apiError, setApiError] = useState('');
   const navigate = useNavigate();
   // const [loggedIn, setLoggedIn] = useState(false);
-  const { login } = useContext(AuthContext);
+  const { login,logout,user,token } = useContext(AuthContext);
 
   const validate = () => {
     let isValid = true;
@@ -58,7 +59,20 @@ const Login = () => {
     }
   };
 
-  return (
+  
+  const handleLogout = async() => {
+    try {
+      const response = await axiosInstance.post('/api/logout', {
+        username: user , loginToken: token});
+      logout();
+    // setUser(null);
+    } catch (error) {
+      setApiError(error.response.data || 'An error occurred');
+    }
+};
+
+  return (<>
+    {user == null && 
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
@@ -121,7 +135,21 @@ const Login = () => {
           </Button>
         </Box>
       </Box>
-    </Container>
+    </Container>}
+
+    <Container maxWidth="sm">
+            {user && (
+                <Box mt={4} p={3} boxShadow={3} bgcolor="background.paper">
+                    <Typography variant="h4" gutterBottom>
+                        Welcome, {user}!
+                    </Typography>
+                    <Button variant="contained" color="primary" onClick={handleLogout}>
+                        Logout
+                    </Button>
+                </Box>
+            )}
+        </Container>
+    </>
   );
 };
 
