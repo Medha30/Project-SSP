@@ -85,12 +85,6 @@ public class UserService {
         catch (Exception e){
             e.printStackTrace();
         }
-//        String userI = request.getHeader("UserInfo");
-//        ObjectMapper mapper= new ObjectMapper();
-//        UserInfo userInfo=mapper.readValue(userI,UserInfo.class);
-//        String userName = userInfo.getUser();
-
-//        String userName = request.getHeader("UserInfo");
         return userName;
     }
     
