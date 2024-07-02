@@ -20,7 +20,6 @@ public class Review {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-
     private String quality;
 
     private String review;
