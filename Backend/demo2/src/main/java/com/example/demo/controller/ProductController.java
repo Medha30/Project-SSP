@@ -141,6 +141,19 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
     }
 
+    @PostMapping("/restock")
+    public ResponseEntity<String> restockProduct(@RequestBody Product product) {
+        Optional<Product> optionalProduct = productService.getProductById(product.getId());
+        if (optionalProduct.isPresent()) {
+            Product product1 = optionalProduct.get();
+            product1.setQuantity(product.getQuantity());
+            productService.saveProduct(product1);
+            return ResponseEntity.ok("Product restocked successfully.");
+        } else {
+            return ResponseEntity.badRequest().body("Product not found.");
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Validated @RequestBody Product productDetails) {
         Optional<Product> optionalProduct = productRepository.findById(id);

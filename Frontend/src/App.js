@@ -12,6 +12,7 @@ import AddProducts from './components/Products/AddProducts';
 import CustomerReport from './reports/CustomerReport';
 import ProductReport from './reports/ProductReport';
 import SalesReport from './reports/SalesReport';
+import PlacedOrders from './components/order/PlacedOrders';
 
 const Login = lazy(() => import('./components/login/Login'));
 const Signup = lazy(() => import('./components/signup/Signup'));
@@ -63,6 +64,7 @@ function App() {
                         <Route path='/customerReport' element={<CustomerReport/>} />
                         <Route path='/productReport' element={<ProductReport/>} />
                         <Route path='/SalesReport' element={<SalesReport/>} />
+                        <Route path='/PlacedOrders' element={<PlacedOrders/>} />
 
                       </Routes>
                     </Suspense>

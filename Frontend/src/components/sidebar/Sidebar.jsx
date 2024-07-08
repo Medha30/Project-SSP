@@ -16,23 +16,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   width: '100%',
-  //   maxWidth: 360,
-  //   backgroundColor: theme.palette.background.paper,
-  // },
-  // nested: {
-  //   paddingLeft: theme.spacing(4),
-  // },
-  // listItemText: {
-  //   color: theme.palette.text.primary,
-  // },
-  // logo: {
-  //   display: 'block',
-  //   margin: 'auto',
-  //   width: 50,
-  //   height: 50,
-  // },
+ 
 }));
 
 function SimpleList(props) {
@@ -43,6 +27,7 @@ function SimpleList(props) {
   const [open, setOpen] = useState({
     addProduct: false,
     reports: false,
+    items: false
   });
 
   const handleClick = (item) => {
@@ -74,6 +59,37 @@ function SimpleList(props) {
         </ListItem>
         }
         
+        <ListItem onClick={() => handleClick('items')}>
+          <ListItemIcon>
+            <SummarizeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Items" classes={{ primary: classes.listItemText }} />
+          {open.items ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+
+        <Collapse in={open.items} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem component={Link} to="/items/fruit" className={classes.nested}>
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Fruits " classes={{ primary: classes.listItemText }} />
+            </ListItem>
+            <ListItem component={Link} to="/items/vegetable" className={classes.nested}>
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Vegetables " classes={{ primary: classes.listItemText }} />
+            </ListItem>
+            <ListItem component={Link} to="/items/grocery" className={classes.nested}>
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Groceries " classes={{ primary: classes.listItemText }} />
+            </ListItem>
+          </List>
+        </Collapse>
+
         <ListItem component={Link} to="/cart">
           <ListItemIcon>
             <ShoppingCartIcon />
@@ -81,12 +97,24 @@ function SimpleList(props) {
           <ListItemText primary="View Cart" classes={{ primary: classes.listItemText }} />
         </ListItem>
 
-        <ListItem component={Link} to="/cart">
+        <ListItem component={Link} to="/PlacedOrders" className={classes.nested}>
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Placed Orders" classes={{ primary: classes.listItemText }} />
+            </ListItem>
+
+        <ListItem component={Link} to="/contactUs">
           <ListItemIcon>
             <ContactMailIcon />
           </ListItemIcon>
           <ListItemText primary="Contact" classes={{ primary: classes.listItemText }} />
         </ListItem>
+
+        
+       
+
+
 
         <ListItem onClick={() => handleClick('reports')}>
           <ListItemIcon>
@@ -98,24 +126,12 @@ function SimpleList(props) {
 
         <Collapse in={open.reports} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {/* <ListItem component={Link} to="/CustomerReport" className={classes.nested}>
-              <ListItemIcon>
-                <DescriptionIcon />
-              </ListItemIcon>
-              <ListItemText primary="Customer Report" classes={{ primary: classes.listItemText }} />
-            </ListItem> */}
             <ListItem component={Link} to="/ProductReport" className={classes.nested}>
               <ListItemIcon>
                 <DescriptionIcon />
               </ListItemIcon>
               <ListItemText primary="Product Report" classes={{ primary: classes.listItemText }} />
             </ListItem>
-            {/* <ListItem component={Link} to="/SalesReport" className={classes.nested}>
-              <ListItemIcon>
-                <DescriptionIcon />
-              </ListItemIcon>
-              <ListItemText primary="Sales Report" classes={{ primary: classes.listItemText }} />
-            </ListItem> */}
           </List>
         </Collapse>
       </List>

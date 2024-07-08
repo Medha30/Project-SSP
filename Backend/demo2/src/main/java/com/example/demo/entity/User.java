@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "users")
@@ -19,6 +20,10 @@ public class User {
 
     @Column(name="login_token")
     private String loginToken;
-    // getters and setters
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Customer customer;
+
 
 }

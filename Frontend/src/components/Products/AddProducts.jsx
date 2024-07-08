@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import ProductList from './ProductList';
 import axiosInstance from '../../utils/axios/axiosInstance';
-import { Box, Button, Container, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { AuthContext } from '../globalContext/AuthContext';
 
 const AddProducts = () => {

@@ -49,4 +49,14 @@ public class UserController {
         return ResponseEntity.ok(validateUser);
 
     }
+
+    @GetMapping("/user/{username}")
+    public ResponseEntity<User> fetchUser(@PathVariable String username) {
+        User user = userService.findByUsername(username);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
 }

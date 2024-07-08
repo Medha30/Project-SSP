@@ -1,45 +1,33 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Cart;
+import com.example.demo.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.dto.PlaceOrder;
 import com.example.demo.service.OrderService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
 
-    @Autowired
-    OrderService orderService;
-//    @GetMapping
-//    public List<Order> getAllOrders()
-//    {
-//        return orderRepository.findAll();
-//    }
-
-//    @GetMapping("/{userid}")
-//    public Optional<Order> getOrderByUserId(@PathVariable Long Userid) {
-//        return orderRepository.findByUserId(Userid);
-//    }
+    @Autowired OrderService orderService;
 
     @PostMapping
-    public String createOrder(@RequestBody PlaceOrder placeOrder)
+    public ResponseEntity<String> createOrder(@RequestBody PlaceOrder placeOrder)
     {
-        return "";
-//        return orderRepository.save(order);
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.saveOrder(placeOrder));
     }
 
-//    @PutMapping("/{id}")
-//    public Order updateOrder(@PathVariable Long id, @RequestBody Order orderDetails) {
-//        Order order = orderRepository.findById(id).orElseThrow();
-//        order.setOrderDate(orderDetails.getOrderDate());
-//        order.setCustomer(orderDetails.getCustomer());
-//        return orderRepository.save(order);
-//    }
-
+    @GetMapping("/{userName}")
+    public ResponseEntity<List<Order>> getOrderByUserName(@PathVariable String userName) {
+        List<Order> orders = orderService.getAllOrdersByUserName(userName);
+        return ResponseEntity.ok().body(orders);
+    }
 
 }

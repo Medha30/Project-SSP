@@ -5,14 +5,14 @@ import { AuthContext } from '../globalContext/AuthContext';
 import axiosInstance from '../../utils/axios/axiosInstance';
 
 const ItemCard = ({ item }) => {
-  const { token } = useContext(AuthContext);
+  const { token,user } = useContext(AuthContext);
   const [apiError, setApiError] = useState('');
   const [apiSuccess, setApiSuccess] = useState('');
 
   const addToCart = async (productId) => {
     console.log(JSON.stringify(token));
-    if (token == null) {
-      setApiError("Please Login first before adding to cart 1");
+    if (token == null || user == null) {
+      setApiError("Please Login first before adding to cart ");
       return false;
     } else {
 
@@ -30,8 +30,14 @@ const ItemCard = ({ item }) => {
             setApiSuccess("Item added to cart");
           }
         } catch (error) {
-          console.log(error.response.data);
-          setApiError(error);
+          // console.log(error.response.data);
+          // setApiError(error);
+          if (error.response && error.response.status === 400) {
+            setApiError(error.response.data); // Set the error message from backend
+        } else {
+            setApiError('An unexpected error occurred.'); // Handle other errors
+        }
+
         }
 
         // }
@@ -74,7 +80,11 @@ const ItemCard = ({ item }) => {
         <Typography variant="h6" color="text.primary">
           Rs {item.price}
         </Typography>
+        {item.quantity>0?
         <Button variant="contained" color="primary" onClick={() => addToCart(item.id)}>Add to Cart</Button>
+        :<Typography variant="h6" color="text.primary">
+        Out of stock
+      </Typography>}
       </CardContent>
     </Card>
   );

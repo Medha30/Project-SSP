@@ -4,7 +4,6 @@ import com.example.demo.entity.Cart;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
 import com.example.demo.repository.CartRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,17 +27,21 @@ public class CartService {
         Product product=productService.getProductById(cart.getProduct().getId()).get();
         cart.setUser(user);
         cart.setProduct(product);
+
         return cartRepository.save(cart);
     }
 
     public List<Cart> getAllCartsByUserName(String userName) {
         User user= userService.findByUsername(userName);
-        return cartRepository.findAllByUserId(user.getId());
+        return cartRepository.findAllByUsername(user.getUsername());
     }
 
     public Cart updateCart(long cartID,int quantity) {
         Optional<Cart> cart = cartRepository.findById(cartID);
-        cart.get().setQuantity(quantity);
+        int quant = cart.get().getProduct().getQuantity();
+        if(quant>=quantity) {
+            cart.get().setQuantity(quantity);
+        }
         return cartRepository.save(cart.get());
     }
 
@@ -49,4 +52,10 @@ public class CartService {
         List<Cart> cart=cartRepository.findCartIdUsingUP(userName,productId);
          cartRepository.deleteAll(cart);
     }
+
+
+    public void deletePlacedCart(String userName)  {
+        cartRepository.deleteAll(getAllCartsByUserName(userName));
+    }
+
 }
