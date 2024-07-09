@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 @Service
@@ -25,15 +27,16 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+        user.setPassword(hashPassword(user.getPassword()));
         return userRepository.save(user);
     }
 
     public String loginUser(User user){
         User foundUser = findByUsername(user.getUsername());
-        if (foundUser != null && foundUser.getPassword().equals(user.getPassword())) {
+        if (foundUser != null && foundUser.getPassword().equals(hashPassword(user.getPassword()))) {
             String token=generateRandomString(15);
             foundUser.setLoginToken(token);
-            saveUser(foundUser);
+            userRepository.save(foundUser);
             return foundUser.getUsername()+""+ token;
         } else {
             return "Invalid username or password";
@@ -44,7 +47,7 @@ public class UserService {
         User foundUser = findByUsername(user.getUsername());
         if (foundUser != null && foundUser.getLoginToken().equals(user.getLoginToken())) {
             foundUser.setLoginToken(null);
-            saveUser(foundUser);
+            userRepository.save(foundUser);
             return "Logout Successfully";
         } else {
             return "Invalid username or password";
@@ -86,6 +89,24 @@ public class UserService {
             e.printStackTrace();
         }
         return userName;
+    }
+
+    public static String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashedBytes) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 algorithm not found!", e);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(hashPassword("ADMIN"));
     }
     
 }

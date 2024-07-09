@@ -12,6 +12,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody User user) {
+        User existingUser = userService.findByUsername(user.getUsername());
+        if (existingUser != null) {
+            return ResponseEntity.status(400).body("Username already exists");
+        } else {
+            userService.saveUser(user);
+            return ResponseEntity.ok("User registered successfully");
+        }
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
             String loginResponse = userService.loginUser(user);
@@ -32,16 +43,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        User existingUser = userService.findByUsername(user.getUsername());
-        if (existingUser != null) {
-            return ResponseEntity.status(400).body("Username already exists");
-        } else {
-            userService.saveUser(user);
-            return ResponseEntity.ok("User registered successfully");
-        }
-    }
+
 
     @PostMapping("/validate")
     public ResponseEntity<Boolean> validate(@RequestBody User user){
